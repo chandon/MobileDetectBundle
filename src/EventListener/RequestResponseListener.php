@@ -89,7 +89,7 @@ class RequestResponseListener
         $this->isFullPath = $fullPath;
     }
 
-    public function handleRequest(RequestEvent $event)
+    public function handleRequest($event)
     {
         // only handle master request, do not handle sub request like esi includes
         // If the device view is "not the mobile view" (e.g. we're not in the request context)
@@ -152,7 +152,7 @@ class RequestResponseListener
         return $this->needModifyResponse;
     }
 
-    public function handleResponse(ResponseEvent $event)
+    public function handleResponse($event)
     {
         if ($this->needModifyResponse && $this->modifyResponseClosure instanceof \Closure) {
             $modifyClosure = $this->modifyResponseClosure;
@@ -192,7 +192,7 @@ class RequestResponseListener
      */
     protected function prepareResponseModification(string $view)
     {
-        $this->modifyResponseClosure = function (DeviceView $deviceView, ResponseEvent $event) use ($view) {
+        $this->modifyResponseClosure = function (DeviceView $deviceView, $event) use ($view) {
             return $deviceView->modifyResponse($view, $event->getResponse());
         };
     }
